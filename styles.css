@@ -1,6 +1,11 @@
-*, *::before, *after{
+
+
+*,*::before,::after{
     box-sizing: border-box;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: "Quintessential", cursive;
+    font-size: 1.09em;
+    line-height: 51px;
+   
 }
 
 body {
@@ -11,16 +16,18 @@ body {
     align-items: center;
     width: 100vw;
     height: 100vh;
-    background-color: antiquewhite;
+    background-image: url('https://media.giphy.com/media/5xMaIeQU0daOA/giphy.gif');background-repeat:no-repeat;
 }
 
 .container{
     width: 800px;
     max-width: 80%;
-    background-color: blanchedalmond;
+    background-color: transparent;
     padding:10px;
     border-radius:5px;
     box-shadow: 0 0 10px 2px;
+   font-weight: bold;
+
 }
 
 .btn-grid{
