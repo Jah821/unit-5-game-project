@@ -166,7 +166,7 @@ const textNodes = [
            nextText:8
         },
         {
-            text:'Damn bro',
+            text:'Restart',
            nextText:-1
         }
     ]
