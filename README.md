@@ -19,7 +19,7 @@ The character can move left or right on the screen
 Moving animations
  
 
-Advanced MPV features:
+Advanced MVP features:
 
 An inventory system, with support for hidden items, item descriptions, and multiple inventories!
 Multi-player gameplay.
