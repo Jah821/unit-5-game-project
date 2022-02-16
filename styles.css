@@ -33,6 +33,7 @@ body {
     background-color: antiquewhite;
     flex-direction: column;
 
+
  
 
 }
@@ -40,7 +41,7 @@ body {
 .container{
     width: 800px;
     max-width: 80%;
-    background-color: transparent;
+    background-color: blanchedalmond;
     padding:10px;
     border-radius:5px;
     box-shadow: 0 0 10px 2px;
@@ -59,7 +60,7 @@ body {
 
 .btn{
     background-color: hsl(200,100%,50%);
-    border: 1px solid hsl(200,100%,30%);
+    border: 1px solid black;
     border-radius: 5px;
     padding: 5px 10px;
     color:whitesmoke;
@@ -68,6 +69,12 @@ body {
 
 .btn:hover{
     border-color: black
+}
+
+audio {
+    filter: sepia(20%) saturate(70%) grayscale(1) contrast(99%) invert(12%);
+    width: 200px;
+    height: 25px;
 }
 
 

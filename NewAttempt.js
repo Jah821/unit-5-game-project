@@ -17,6 +17,7 @@ let state = {}
 function startGame() {
   state = {}
   showTextNode(1)
+  // play()
 }
 
 function showTextNode(textNodeIndex) {
@@ -37,6 +38,11 @@ function showTextNode(textNodeIndex) {
   })
 }
 
+// function play() {
+//   var audio = new Audio('./soundFile/Dido.mp3');
+//   audio.play();
+// }
+
 function showOption(option) {
   return option.requiredState == null || option.requiredState(state)
 }
@@ -51,6 +57,106 @@ function selectOption(option) {
 }
 
 const textNodes = [
+  {
+    id:26,
+    text:'You decide to shoot Micheal in the head and go about the hesit by yourself. You couldnt risk him getting you in trouble by killing more innocent people.While in the midst of all of this a gaurd was able to get free and shoot at you. Bullets whiz pass your ear and that feels to close for comfort. You try to retreat out the building but its already surrounded by police car. You have to make a choice either surrender or put up a fight?.',
+    options:[
+      {
+        text:'Throw in the white flag and go to Jail',
+        nextText:27
+      },
+      {
+        text:'Put up a fight',
+        nextText:28
+      }
+    ]
+  },
+  
+  {
+    id:23,
+    text:'You and Mike decide to go into the the bank guns blazing. You guys decide to gather all the tourist and place them into a room, you do this while Mike goes and strips the gaurds of their radios and weapons. While in the conference room you hear a loud bang something like a gunshot, you immedietaly run to where you hear it and you see Mike standing over a lifeless gaurd. You scream his name and he turns around and says he had to do it. Instead of arguing with him you decide to continue on with the heist. What should you do?',
+    options:[
+      {
+        text:'Kill Mike',
+        requiredState: (currentState) => currentState.Crazy,
+        nextText:26
+      },
+      {
+        text:'Argue with Mike about him killing the guard and decide to leave.',
+        requiredState: (currentState) => currentState.Humble,
+        nextText:1
+      },
+
+      {
+        text:'You dont really care about the gaurd, you want money but without any killings it is what it is though',
+        setState: {Coward:true},
+        nextText:10
+      }
+
+    ]
+  },
+  
+  
+  {
+    id:22,
+    text:'You and Mike decide to stick in like a tourist.... You guys are able to blend in with the other tourists, AFter touring the bank with the group you both decide to duck off into a random room and start to look for the blueprint to vault',
+    options:[
+      {
+        text:'You found the room without Mike go through it',
+        nextText:10
+      }
+    ]
+  },
+  
+  {
+    id:21,
+    text:'You decide to call up Micheal and plan out the heist. It is much easier now that you another brain in the mix. The only resulting factor is someone else ratting you out to the police. You also have to split the take with Mike. But that is your boy, you guys decide to go on with the plan. Mike tells you that you guys can either go in guns blazing since the security team doesnt have that great of an arsenal or you guys can just in an stick in like tourists. Whats the plan ?',
+    options:[
+      {
+        text:'Go in "guns blazing"',
+        setState: {Crazy:true} && {FourtyNickel:true},
+        nextText:23
+      },
+      {
+        text:'Stick in like tourist',
+        setState:{Smart:true},
+        nextText:22
+      },
+
+      {
+        text:'Go about the heist by yourself. You dont want to risk going to jail because of Mike',
+        setState:{Unloyal:true},
+        nextText:2
+      }
+
+    ]
+  },
+  {
+    id:19,
+    text:'After badgering Micheal to give up more details about the JSC heist, you find out that there is a vault in the bank of JSC. You decide to go home a research more about the bank and when it was built, through access of the deepweb you were able to purchase a blueprint of the JSC building gaining you insight about the best path to take to the undergound vault. ',
+    options:[
+      {
+        text:'Travel to the vault and stake out the times that guard shifts end.',
+        requiredState: (currentState) => currentState.Persistent,
+        nextText:22
+      },
+      {
+        text:'All of this research is too much. How hard can a heist be?.',
+        requiredState:(currentState) =>
+        currentState.Careless,
+        nextText:2
+        
+      },
+
+      {
+        text:'Call up Micheal and plan something out.',
+        setState: {loyal:true},
+        nextText:21
+      }
+    ]
+  },
+  
+  
   {
     id: 1,
     text: 'The year is 2052. You are a world known robber and all your life you have had one dream. This dream was to steal from the vault in the bank of JSC. Stories about this vault say that this vault contains gold bars, jewelry, and money. All of these things have been collected over hundreds of years and you want to be the owner of these riches. All you have been waiting for was your one way in. You have thought for many years on how you were to enter, but all of them either make you dead or put in jail. You know that the bank is heavily guarded with many weapons and guards. If you want to fulfill your dream, you have to act fast. The feds are on to you and if they catch you, you will be put in prison for a very long time. As you are driving to an unknown destination, you hear on the radio that JSC is now open to the public. This is your only shot. You have to make a decision though. Do you travel to JSC to fulfill your dream, or stay home.',
@@ -75,8 +181,19 @@ const textNodes = [
       },
       {
         text: 'Hide in the shadows',
-          nextText: 18
+          nextText: 18,
+          setState:{Coward:true}
       },
+      {
+        text:'Beat up a gaurd and take their uniform',
+        nextText:10,
+        requiredState: (currentState) => currentState.Careless
+      },
+      {
+        text:'Stick in like a tourist and wander around the bank and look for the room to the vault',
+        nextText:4,
+        
+      }
     ]
   },
   {
@@ -91,15 +208,22 @@ const textNodes = [
   },
   {
     id: 3,
-    text : 'You stay put and keep a low profile for the time being. You dont talk to anyone because you are afraid that people are going to snitch on you or figure out who you are. Over the course of 2 weeks, you become very lonely and depressed and you question what you are doing. As you watch the news, you see that the feds have gotten very close to figuring out where you are and they will put you in jail very soon if you dont move. Do you stay on the move until further notice, or do you stay put?',
+    text : 'You stay put and keep a low profile for the time being. WIthout a scheme to make money, you are not abe to pay your bills and afford the other luxurys in life. You start to think about getting a job but the only problem is they all pay minimum wage. The other choice you have is to reach out to your old friend Micheal who can usually come up with a money scheme or two but they always result in police contact. You also have the option to just stay put and let life play out? What do you want to do?',
     options: [
       {
-        text: 'Keep moving',
-        nextText: 6
+        text: 'Apply for a job at Walmart',
+        nextText: 6,
+        setState: {Humble: true}
       },
       {
-        text: 'Stay!',
-        nextText: 7
+        text: 'Call Micheal',
+        nextText:6
+
+      },
+      {
+        text: 'Stay put',
+        nextText: 19,
+        setState: {Careless:true}
       }
     ]
   },
@@ -139,11 +263,12 @@ const textNodes = [
 },
 {
   id: 6,
-  text:'Two or three weeks pass and you are still on the move.You have just been travelling from place to place staying in motels and in your car overnight. One night you are driving just five miles per hour above the speed limit and a cop flashes his lights behind you. You get very scared that he will know who you are so you speed up. You are know being chased by the cop and you realize that this is the worst thing that you could have done, but there is no going back now. One cop car turned into 10 cop cars all trying to stop you. You leave the highway and end up on some local roads and you have lost the cops. You end up staying in your car on the side of a road that you have never seen before. After 30 minutes pass, you fall into a deep sleep. You are jolted awake by the sound of shouting and sirens. Your worst nightmare has come true. There are cop cars all around you and they arrest you. You realize that you messed up and that you are going to be in jail for a long time. You go to trial and receive 35 years in prison.',
+  text:'Two or three weeks pass and you are still looking for a job.You have  been reaching out to company after company just for it to be a dead end. WHile going through all of this you have been spending the last of your savings just to keep the lights, just barely having any food to eat. One night after an your interview, you decide to go hang out with your friend Micheal.  You guys have a conversation about your younger days and how much you guys have elevated from small schemes to big ones. Accidentaly Micheal blurts out something about a room of gold in the JSC bank but stops right there. You try to get him to talk more about it but hes leary. After a while he tells you about a scheme that you can make some quick money within the hour. ',
   options:[
       {
-         text:'Good Luck !',
-         nextText: -1
+         text:'Get persistent about the JSC heist',
+         nextText: 2,
+         setState: {Persistent:true}
       }
     ]
 },
